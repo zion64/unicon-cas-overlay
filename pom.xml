@@ -92,7 +92,7 @@
     </dependencies>
 
     <properties>
-        <cas.version>4.0.0-RC3</cas.version>
+        <cas.version>4.0.0</cas.version>
         <cas-addons.version>1.9.1</cas-addons.version>
         <servlet.version>2.5</servlet.version>
         <spring-addons.version>0.1</spring-addons.version>
