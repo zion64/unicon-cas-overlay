@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:sec="http://www.springframework.org/schema/security"
-       xmlns:cas="http://unicon.net/schema/cas"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:cas="http://unicon.net/schema/cas"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/security
                            http://www.springframework.org/schema/security/spring-security-3.1.xsd
@@ -12,55 +9,52 @@
                            http://unicon.net/schema/cas/cas-addons.xsd">
 
 
-    <bean id="authenticationManager" class="org.jasig.cas.authentication.PolicyBasedAuthenticationManager">
-        <constructor-arg>
-            <map>
-                <entry key-ref="proxyAuthenticationHandler" value-ref="proxyPrincipalResolver" />
-                <entry key-ref="primaryAuthenticationHandler" value-ref="primaryPrincipalResolver" />
-            </map>
-        </constructor-arg>
-        <property name="authenticationPolicy">
-            <bean class="org.jasig.cas.authentication.AnyAuthenticationPolicy" />
-        </property>
-    </bean>
+	<bean id="authenticationManager" class="org.jasig.cas.authentication.PolicyBasedAuthenticationManager">
+		<constructor-arg>
+			<map>
+				<entry key-ref="proxyAuthenticationHandler" value-ref="proxyPrincipalResolver" />
+				<entry key-ref="primaryAuthenticationHandler" value-ref="primaryPrincipalResolver" />
+			</map>
+		</constructor-arg>
+		<property name="authenticationPolicy">
+			<bean class="org.jasig.cas.authentication.AnyAuthenticationPolicy" />
+		</property>
+	</bean>
 
-    <!-- Required for proxy ticket mechanism. -->
-    <bean id="proxyAuthenticationHandler"
-          class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"
-          p:httpClient-ref="httpClient" />
+	<!-- Required for proxy ticket mechanism. -->
+	<bean id="proxyAuthenticationHandler" class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"
+		p:httpClient-ref="httpClient" />
 
-    <bean id="primaryAuthenticationHandler"
-          class="org.jasig.cas.authentication.AcceptUsersAuthenticationHandler">
-        <property name="users">
-            <map>
-                <entry key="casuser" value="Mellon"/>
-            </map>
-        </property>
-    </bean>
+	<bean id="primaryAuthenticationHandler" class="org.jasig.cas.authentication.AcceptUsersAuthenticationHandler">
+		<property name="users">
+			<map>
+				<entry key="casuser" value="Mellon" />
+			</map>
+		</property>
+	</bean>
 
-    <!-- Required for proxy ticket mechanism -->
-    <bean id="proxyPrincipalResolver"
-          class="org.jasig.cas.authentication.principal.BasicPrincipalResolver" />
+	<!-- Required for proxy ticket mechanism -->
+	<bean id="proxyPrincipalResolver" class="org.jasig.cas.authentication.principal.BasicPrincipalResolver" />
 
-    <!--
-       | Resolves a principal from a credential using an attribute repository that is configured to resolve
-       | against a deployer-specific store (e.g. LDAP).
-       -->
-    <bean id="primaryPrincipalResolver"
-          class="org.jasig.cas.authentication.principal.PersonDirectoryPrincipalResolver" >
-        <property name="attributeRepository" ref="attributeRepository" />
-    </bean>
+	<!--
+		| Resolves a principal from a credential using an attribute repository that is configured to resolve
+		| against a deployer-specific store (e.g. LDAP).
+	-->
+	<bean id="primaryPrincipalResolver" class="org.jasig.cas.authentication.principal.PersonDirectoryPrincipalResolver">
+		<property name="attributeRepository" ref="attributeRepository" />
+	</bean>
 
-    <cas:json-attribute-repository/>
+	<cas:json-attribute-repository />
 
-    <cas:json-services-registry/>
+	<!-- || for serviceRegistryDao || -->
+	<cas:json-services-registry config-file="file:/etc/newcas/servicesRegistry.conf"/>
 
-    <cas:inspektr-log-files-audit-manager/>
+	<cas:inspektr-log-files-audit-manager />
 
-    <cas:default-health-check-monitor/>
+	<cas:default-health-check-monitor />
 
-    <sec:user-service id="userDetailsService">
-        <sec:user name="none" authorities="none"/>
-    </sec:user-service>
+	<sec:user-service id="userDetailsService">
+		<sec:user name="none" authorities="none" />
+	</sec:user-service>
 
 </beans>

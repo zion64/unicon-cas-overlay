@@ -61,7 +61,6 @@
             <groupId>net.unicon.cas</groupId>
             <artifactId>cas-addons</artifactId>
             <version>${cas-addons.version}</version>
-            <scope>compile</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.jasig.cas</groupId>
@@ -89,14 +88,20 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+        	<groupId>net.unicon.persondir</groupId>
+        	<artifactId>persondir-addons</artifactId>
+        	<version>${persondir-addons.version}</version>
+        </dependency>
     </dependencies>
 
     <properties>
         <cas.version>4.0.0</cas.version>
-        <cas-addons.version>1.9.1</cas-addons.version>
+        <cas-addons.version>1.11.1</cas-addons.version>
         <servlet.version>2.5</servlet.version>
         <spring-addons.version>0.1</spring-addons.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <persondir-addons.version>0.2</persondir-addons.version>
     </properties>
 
     <repositories>
