@@ -47,7 +47,7 @@
 	<cas:json-attribute-repository />
 
 	<!-- || for serviceRegistryDao || -->
-	<cas:json-services-registry config-file="file:/etc/newcas/servicesRegistry.conf"/>
+	<cas:json-services-registry config-file="file:/etc/cas/servicesRegistry.conf"/>
 
 	<cas:inspektr-log-files-audit-manager />
 
