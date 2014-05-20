@@ -53,7 +53,7 @@
 	<bean id="primaryPrincipalResolver" class="org.jasig.cas.authentication.principal.PersonDirectoryPrincipalResolver">
 		<property name="attributeRepository" ref="attributeRepository" />
 	</bean>
-	<cas:json-attribute-repository />
+	<cas:json-attribute-repository config-file="${person.attributes.config.location:/etc/cas/person-attributes.conf}" />
 
 
 
