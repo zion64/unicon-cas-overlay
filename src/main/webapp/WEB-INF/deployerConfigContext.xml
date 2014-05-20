@@ -24,17 +24,27 @@
 	<!-- Required for proxy ticket mechanism. -->
 	<bean id="proxyAuthenticationHandler" class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"
 		p:httpClient-ref="httpClient" />
-
-	<bean id="primaryAuthenticationHandler" class="org.jasig.cas.authentication.AcceptUsersAuthenticationHandler">
-		<property name="users">
-			<map>
-				<entry key="casuser" value="Mellon" />
-			</map>
-		</property>
-	</bean>
-
 	<!-- Required for proxy ticket mechanism -->
 	<bean id="proxyPrincipalResolver" class="org.jasig.cas.authentication.principal.BasicPrincipalResolver" />
+	
+	
+	<cas:bind-ldap-authentication-handler
+		id="primaryAuthenticationHandler"
+		urls="${ldap.url}" 
+		user-dn="${ldap.managerDn}" 
+		password="${ldap.managerPassword}"
+		search-base="${ldap.user.baseDn}" 
+		filter="${ldap.user.searchFilter}"
+		is-pooled="${ldap.pool.is-pooled}"
+		ignore-partial-result-exception="${ldap.ignore-partial-result-exception}"
+		expose-context-source-bean-as="contextSource">
+        <cas:ldap-properties>
+            <cas:ldap-prop key="com.sun.jndi.ldap.connect.timeout" value="${com.sun.jndi.ldap.connect.timeout}"/>
+            <cas:ldap-prop key="com.sun.jndi.ldap.read.timeout" value="${com.sun.jndi.ldap.read.timeout}"/>
+            <cas:ldap-prop key="java.naming.security.authentication" value="${java.naming.security.authentication}"/>
+            <cas:ldap-prop key="java.naming.referral" value="${java.naming.referral}"/>
+        </cas:ldap-properties>
+	</cas:bind-ldap-authentication-handler>
 
 	<!--
 		| Resolves a principal from a credential using an attribute repository that is configured to resolve
@@ -43,8 +53,9 @@
 	<bean id="primaryPrincipalResolver" class="org.jasig.cas.authentication.principal.PersonDirectoryPrincipalResolver">
 		<property name="attributeRepository" ref="attributeRepository" />
 	</bean>
-
 	<cas:json-attribute-repository />
+
+
 
 	<!-- || for serviceRegistryDao || -->
 	<cas:json-services-registry config-file="file:/etc/cas/servicesRegistry.conf"/>
