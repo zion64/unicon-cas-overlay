@@ -1,4 +1,4 @@
-<Context docBase="$CAS_HOME$/target/cas.war"
+<Context docBase="/volume1/webapps/cas/target/cas.war"
          privileged="true"
          antiResourceLocking="false"
          antiJARLocking="false"

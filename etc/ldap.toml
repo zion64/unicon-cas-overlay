@@ -1,0 +1,42 @@
+[ldap]
+baseDN = "ou=people,dc=zeiv,dc=com"
+urls = ["ldap://ldap1.zeiv.dsmynas.com:389"]
+userDN = "uid=admin,ou=system"
+password = "delphi96"
+
+[ldap.queryAttributeMappings]
+username = "uid"
+
+[ldap.resultAttributeMappings]
+uid = "uid"
+cn = "CommonName"
+sn = "SurName"
+displayName = "FullName"
+employeeNumber = "EmployeeNumber"
+givenName = "GivenName"
+mail = "mail"
+mobile = "MobilePhoneNumber"
+postalAddress = "PostalAddress"
+postalCode = "PostalCode"
+telephoneNumber = "TelePhoneNumber"
+title = "Title"
+departmentNumber = "DepartmentNumber"
+
+[ldap.baseEnvironmentSettings]
+com.sun.jndi.ldap.connect.timeout = 3000
+com.sun.jndi.ldap.read.timeout = 3000
+java.naming.security.authentication = "simple"
+
+# Advanced settings
+###################
+
+pooled = false
+queryTemplate = "uid={0}"
+unmappedUsernameAttribute = "CN"
+cacheEnvironmentProperties = false
+useAllQueryAttributes = true
+queryType = "AND"
+referral = "follow"
+ignoreNameNotFoundException = false
+ignorePartialResultException = true
+requireAllQueryAttributes = true
