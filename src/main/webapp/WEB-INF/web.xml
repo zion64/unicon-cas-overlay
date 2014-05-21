@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
-    <display-name>Central Authentication System (CAS) ${project.version}</display-name>
+    <display-name>Central Authentication System (CAS) 3.5.2.1 </display-name>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -40,14 +40,18 @@
         <url-pattern>/sso-sessions/*</url-pattern>
     </filter-mapping>
 
-    <filter>
-        <filter-name>characterEncodingFilter</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>characterEncodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
     <!--
         - Loads the CAS ApplicationContext.

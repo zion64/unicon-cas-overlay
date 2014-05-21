@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:sec="http://www.springframework.org/schema/security"
-       xmlns:cas="http://unicon.net/schema/cas"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-                           http://www.springframework.org/schema/beans/spring-beans.xsd
-                           http://www.springframework.org/schema/security
-                           http://www.springframework.org/schema/security/spring-security-3.1.xsd
-                           http://unicon.net/schema/cas
-                           http://unicon.net/schema/cas/cas-addons.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:cas="http://unicon.net/schema/cas" xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://unicon.net/schema/cas http://unicon.net/schema/cas/cas-addons.xsd">
 
 
-    <cas:default-test-authentication-manager/>
+	<!-- <cas:default-test-authentication-manager/> -->
+	<cas:authentication-manager-with-bind-ldap-handler filter="uid=%u" user-dn="uid=admin,ou=system" search-base="dc=zeiv,dc=com"
+		urls="ldap://ldap1.zeiv.dsmynas.com" password="delphi96" expose-context-source-bean-as="contextSource" is-pooled="false" ignore-partial-result-exception="true">
+	</cas:authentication-manager-with-bind-ldap-handler>
 
-    <cas:json-attribute-repository/>
+	<bean id="attributeRepository" class="net.unicon.persondir.TomlLdapPersonAttributeDao" c:tomlConfigFile="${person.attributes.toml.config.location}" />
+	<!-- <cas:json-attribute-repository config-file="${attribute.repository.config.location:file:/etc/cas/person-attributes.conf}" /> -->
 
-    <cas:json-services-registry/>
+	<cas:json-services-registry config-file="${service.registry.config.location:file:/etc/cas/servicesRegistry.conf}" read-write="true" />
 
-    <cas:inspektr-log-files-audit-manager/>
+	<cas:inspektr-log-files-audit-manager />
 
-    <cas:default-health-check-monitor/>
+	<cas:default-health-check-monitor />
 
-    <sec:user-service id="userDetailsService">
-        <sec:user name="none" authorities="none"/>
-    </sec:user-service>
+
+
+
+
+	<sec:ldap-user-service id="userDetailsService" server-ref="ldapServer" 
+		group-search-base="ou=groups,dc=zeiv,dc=com" 
+		group-search-filter="(member={0})" 
+		group-role-attribute="cn" 
+		user-search-base="dc=zeiv,dc=com" 
+		user-search-filter="(uid={0})" role-prefix="ROLE_"/>
+	<sec:ldap-server id="ldapServer" manager-dn="uid=admin,ou=system" manager-password="delphi96" url="ldap://ldap1.zeiv.dsmynas.com" />
+
+	<!-- <sec:user-service id="userDetailsService" properties="${user.details.file.location}"> -->
+	<!-- <sec:user name="admin" password="notused" authorities="ROLE_ADMIN" /> -->
+	<!-- </sec:user-service> -->
 
 </beans>

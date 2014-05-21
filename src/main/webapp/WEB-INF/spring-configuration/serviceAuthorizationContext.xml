@@ -5,6 +5,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://unicon.net/schema/cas http://unicon.net/schema/cas/cas-addons.xsd">
 
-    <cas:service-authorization-action/>
+    <cas:service-authorization-action />
 
 </beans>
