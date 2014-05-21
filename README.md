@@ -5,6 +5,8 @@ Generic CAS maven war overlay to exercise the latest versions of CAS as well as 
 
 This overlay could be freely used as a starting template for local CAS maven war overlays.
 
+리모트 아처타입 : http://nexus.unionia.com:8888/nexus/service/local/repo_groups/public/content/archetype-catalog.xml
+
 # Versions
 ```xml
 <cas.version>3.5.2</cas.version>
