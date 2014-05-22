@@ -7,30 +7,48 @@
 
 
 	<!-- <cas:default-test-authentication-manager/> -->
-	<cas:authentication-manager-with-bind-ldap-handler filter="uid=%u" user-dn="uid=admin,ou=system" search-base="dc=zeiv,dc=com"
-		urls="ldap://ldap1.zeiv.dsmynas.com" password="delphi96" expose-context-source-bean-as="contextSource" is-pooled="false" ignore-partial-result-exception="true">
+	<cas:authentication-manager-with-bind-ldap-handler 
+		urls="ldap://ldap1.zeiv.dsmynas.com" 
+		user-dn="uid=admin,ou=system" 
+		password="delphi96" 
+		is-pooled="false" 
+		search-base="dc=zeiv,dc=com"
+		filter="uid=%u"  
+		expose-context-source-bean-as="contextSource" 
+		ignore-partial-result-exception="true" >
 	</cas:authentication-manager-with-bind-ldap-handler>
 
-	<bean id="attributeRepository" class="net.unicon.persondir.TomlLdapPersonAttributeDao" c:tomlConfigFile="${person.attributes.toml.config.location}" />
+
+
+
+	<bean id="attributeRepository" class="net.unicon.persondir.TomlLdapPersonAttributeDao" 
+		c:tomlConfigFile="${person.attributes.toml.config.location}" />
 	<!-- <cas:json-attribute-repository config-file="${attribute.repository.config.location:file:/etc/cas/person-attributes.conf}" /> -->
+
+
+
 
 	<cas:json-services-registry config-file="${service.registry.config.location:file:/etc/cas/servicesRegistry.conf}" read-write="true" />
 
-	<cas:inspektr-log-files-audit-manager />
 
+
+	<cas:inspektr-log-files-audit-manager />
 	<cas:default-health-check-monitor />
 
 
-
-
-
+	<!-- service management 애플리케이션의 권한을 체크하기 위해서 LDAP groups entry에서 ROLE을 가져오는 빈임. -->
 	<sec:ldap-user-service id="userDetailsService" server-ref="ldapServer" 
 		group-search-base="ou=groups,dc=zeiv,dc=com" 
-		group-search-filter="(member={0})" 
+		group-search-filter="${ldap.role.searchFilter}" 
 		group-role-attribute="cn" 
-		user-search-base="dc=zeiv,dc=com" 
-		user-search-filter="(uid={0})" role-prefix="ROLE_"/>
-	<sec:ldap-server id="ldapServer" manager-dn="uid=admin,ou=system" manager-password="delphi96" url="ldap://ldap1.zeiv.dsmynas.com" />
+		user-search-base="${ldap.user.baseDn}" 
+		user-search-filter="(uid={0})" 
+		role-prefix="ROLE_" 
+		user-details-class="inetOrgPerson"/>
+	<sec:ldap-server id="ldapServer"
+		url="${ldap.url}" 
+		manager-dn="${ldap.managerDn}" 
+		manager-password="${ldap.managerPassword}"/>
 
 	<!-- <sec:user-service id="userDetailsService" properties="${user.details.file.location}"> -->
 	<!-- <sec:user name="admin" password="notused" authorities="ROLE_ADMIN" /> -->
