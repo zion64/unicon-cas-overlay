@@ -186,7 +186,13 @@
 		The "showWarningView" end state is the end state for when the user has requested privacy settings (to be "warned") to be turned on.  It delegates to a 
 		view defines in default_views.properties that display the "Please click here to go to the service." message.
 	-->
-	<end-state id="showWarningView" view="casLoginConfirmView" />
+<!-- 	<end-state id="showWarningView" view="casLoginConfirmView" /> -->
+	<!-- 로그인 화면에 사용자 프로필을 보여주기 위해 재정의함. -->
+	<end-state id="showWarningView" view="casLoginConfirmView" >
+            <on-entry>
+                <evaluate expression="authenticationSupport.getAuthenticatedPrincipalFrom(requestScope.ticketGrantingTicketId)" result="requestScope.principal"/>
+            </on-entry>	
+	</end-state>
 
     <end-state id="postView" view="postResponseView">
         <on-entry>

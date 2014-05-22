@@ -24,5 +24,9 @@
 			<p><spring:message code="screen.success.success" /></p>
 			<p><spring:message code="screen.success.security" /></p>
 		</div>
+		
+		<div id="msg" class="success">
+			<p>Principal Id : <c:out value="${principal.id}" /></p>
+		</div>		
 <jsp:directive.include file="includes/bottom.jsp" />
 

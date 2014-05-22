@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:c="http://www.springframework.org/schema/c"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--
+		로그인 성공 화면에 로그인한 사용자의 프로필정보를 표현하기 위해 안종덕이 cas-addons 
+		페이지(https://github.com/Unicon/cas-addons/wiki/Authenticated-Principal-in-Generic-Success-Login-View)를 
+		참고하여 정의함 
+	-->
+	<bean id="authenticationSupport" class="net.unicon.cas.addons.authentication.internal.DefaultAuthenticationSupport" 
+		c:ticketRegistry-ref="ticketRegistry" />
+
+</beans>
