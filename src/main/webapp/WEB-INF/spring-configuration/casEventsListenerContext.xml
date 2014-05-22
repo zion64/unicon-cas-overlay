@@ -8,5 +8,6 @@
        http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <context:component-scan base-package="net.unicon.cas.overlay.events"/>
-
+	<context:annotation-config/>
+	
 </beans>

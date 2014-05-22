@@ -11,6 +11,6 @@
 
     <cas:default-authentication-support/>
 
-    <cas:default-events-publisher/>
+    <cas:default-events-publisher />
 
 </beans>
